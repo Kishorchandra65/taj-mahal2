@@ -1,0 +1,22 @@
+{
+  "nav": {
+    "home": "Home",
+    "order": "Online Bestellen",
+    "about": "Over Ons",
+    "contact": "Contact",
+    "reserve": "Reserveer"
+  },
+  "hero": {
+    "badge": "Indiaas Tandoori Restaurant · Oldenburg",
+    "title1": "De Aroma's van",
+    "title2": "India",
+    "title3": "midden in het hart van Oldenburg",
+    "subtitle": "Taj Mahal in Oldenburg: Indiase keuken met Tandoori, Curry en vegetarische gerechten, dagelijks geopend voor lunch en diner.",
+    "orderBtn": "Online Bestellen (10% korting bij afhalen, 5% bij bezorgen)",
+    "reserveBtn": "Reserveer een Tafel"
+  },
+  "common": {
+    "loading": "Laden...",
+    "orderNow": "Nu Bestellen"
+  }
+}

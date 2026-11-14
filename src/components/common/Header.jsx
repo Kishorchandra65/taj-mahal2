@@ -1,6 +1,7 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function Header() {
   const { cartCount, setIsCartOpen } = useCart();
@@ -8,6 +9,7 @@ export default function Header() {
   const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -16,7 +18,6 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu when changing pages
   useEffect(() => {
     setMobileMenuOpen(false);
   }, [location.pathname]);
@@ -31,11 +32,15 @@ export default function Header() {
     }, 100);
   };
 
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
+
   const navLinks = [
-    { path: '/', label: 'Home' },
-    { path: '/order', label: 'Order Online' },
-    { path: '/about', label: 'About Us' },
-    { path: '/contact', label: 'Contact' },
+    { path: '/', label: t('nav.home') },
+    { path: '/order', label: t('nav.order') },
+    { path: '/about', label: t('nav.about') },
+    { path: '/contact', label: t('nav.contact') },
   ];
 
   return (
@@ -46,7 +51,6 @@ export default function Header() {
             <img src="/tajlogo.png" alt="Taj Mahal Logo" />
           </Link>
 
-          {/* Desktop Navigation */}
           <nav className="header-nav desktop-nav">
             {navLinks.map((link) => (
               <Link
@@ -60,6 +64,13 @@ export default function Header() {
           </nav>
 
           <div className="header-actions">
+            {/* Language Switcher */}
+            <div className="language-switcher">
+              <button onClick={() => changeLanguage('en')} className={i18n.language.startsWith('en') ? 'active' : ''}>EN</button>
+              <span>|</span>
+              <button onClick={() => changeLanguage('nl')} className={i18n.language.startsWith('nl') ? 'active' : ''}>NL</button>
+            </div>
+
             <button
               onClick={() => setIsCartOpen(true)}
               className="header-cart"
@@ -69,10 +80,9 @@ export default function Header() {
             </button>
             
             <button onClick={handleReserve} className="btn-reserve desktop-reserve">
-              Reserve
+              {t('nav.reserve')}
             </button>
 
-            {/* Mobile Toggle Button */}
             <button 
               className={`mobile-menu-btn ${mobileMenuOpen ? 'open' : ''}`}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -105,7 +115,7 @@ export default function Header() {
         </nav>
         <div className="mobile-drawer-footer">
           <button onClick={handleReserve} className="btn-reserve" style={{ width: '100%' }}>
-            Reserve a Table
+            {t('nav.reserve')}
           </button>
         </div>
       </aside>

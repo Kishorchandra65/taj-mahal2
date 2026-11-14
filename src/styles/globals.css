@@ -444,3 +444,39 @@ body { margin: 0; background: var(--burgundy); font-family: var(--font-body); co
     grid-template-columns: 1fr !important;
   }
 }
+
+/* ═══════════ LANGUAGE SWITCHER ═══════════ */
+.language-switcher {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ivory-dim);
+  margin-right: 1rem;
+}
+
+.language-switcher button {
+  background: transparent;
+  border: none;
+  color: var(--ivory-dim);
+  cursor: pointer;
+  padding: 4px;
+  transition: color 0.3s;
+}
+
+.language-switcher button:hover,
+.language-switcher button.active {
+  color: var(--gold);
+}
+
+.language-switcher span {
+  opacity: 0.4;
+}
+
+/* Hide switcher on very small mobile if space is tight */
+@media (max-width: 480px) {
+  .language-switcher {
+    display: none;
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "nav": {
+    "home": "Home",
+    "order": "Order Online",
+    "about": "About Us",
+    "contact": "Contact",
+    "reserve": "Reserve"
+  },
+  "hero": {
+    "badge": "Indian Tandoori Restaurant · Oldenburg",
+    "title1": "The Aromas of",
+    "title2": "India",
+    "title3": "right in the heart of Oldenburg",
+    "subtitle": "Taj Mahal in Oldenburg: Indian cuisine with Tandoori, Curry and vegetarian dishes, open daily for lunch and dinner.",
+    "orderBtn": "Online Order (10% off Pickup, 5% off Delivery)",
+    "reserveBtn": "Reserve a Table"
+  },
+  "common": {
+    "loading": "Loading...",
+    "orderNow": "Order Now"
+  }
+}
