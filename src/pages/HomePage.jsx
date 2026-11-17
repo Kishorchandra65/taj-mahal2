@@ -114,11 +114,12 @@ export default function HomePage() {
           {[...Array(4)].map((_, i) => (
             <div key={i} style={{ display: 'flex' }}>
               <span>✦ Authentic Indian Cuisine</span>
-              <span>✦ Tandoori Specialties</span>
-              <span>✦ Freshly Baked Naan</span>
-              <span>✦ Vegan & Vegetarian Options</span>
-              <span>✦ 10% Off Pickup</span>
-              <span>✦ 5% Off Delivery</span>
+              <span>✦ Traditional Tandoori Grill</span>
+              <span>✦ Aromatic Curries & Biryanis</span>
+              <span>✦ Freshly Baked Garlic Naan</span>
+              <span>✦ Vegan & Vegetarian Delights</span>
+              <span>✦ Authentic Indian Recipes</span>
+              <span>✦ Warm & Cozy Atmosphere</span>
               <span>✦ Open 7 Days a Week</span>
             </div>
           ))}
@@ -149,35 +150,36 @@ export default function HomePage() {
             <div className="card-text">
               <span className="kicker">{t('hours.kicker')}</span>
               <h2 dangerouslySetInnerHTML={{ __html: t('hours.title') }} />
-              <p className="lead">{t('hours.desc')}</p>
+              
+              {/* ONE SHORT LINE OF TEXT INSTEAD OF THE LONG PARAGRAPH */}
+              <p className="lead" style={{ marginBottom: '1.5rem' }}>
+                We are open 7 days a week for lunch and dinner.
+              </p>
               
               <div className="modern-timetable">
                 {[
-                  { day: 'Monday', isActive: false },
-                  { day: 'Tuesday', isActive: true },
-                  { day: 'Wednesday', isActive: false },
-                  { day: 'Thursday', isActive: false },
-                  { day: 'Friday', isActive: false },
-                  { day: 'Saturday', isActive: false },
-                  { day: 'Sunday', isActive: false },
-                ].map((item, index) => (
-                  <div key={index} className={`timetable-row ${item.isActive ? 'active' : ''}`}>
-                    {item.isActive && <span className="active-arrow">▶</span>}
-                    <span className="timetable-day">{item.day}</span>
-                    <span className="dotted-leader"></span>
-                    <span className="timetable-time">12-15 and 17:30-23</span>
-                  </div>
-                ))}
-                <div className="timetable-row contact-row">
-                  <span className="timetable-day">PHONE</span>
-                  <span className="dotted-leader"></span>
-                  <span className="timetable-time">0441 18005527</span>
-                </div>
-                <div className="timetable-row contact-row">
-                  <span className="timetable-day">EMAIL</span>
-                  <span className="dotted-leader"></span>
-                  <span className="timetable-time">info@tajmahal-oldenburg.de</span>
-                </div>
+                  { name: 'Sunday', dayIndex: 0 },
+                  { name: 'Monday', dayIndex: 1 },
+                  { name: 'Tuesday', dayIndex: 2 },
+                  { name: 'Wednesday', dayIndex: 3 },
+                  { name: 'Thursday', dayIndex: 4 },
+                  { name: 'Friday', dayIndex: 5 },
+                  { name: 'Saturday', dayIndex: 6 },
+                ].map((item, index) => {
+                  const today = new Date().getDay(); 
+                  const isToday = item.dayIndex === today;
+
+                  return (
+                    <div key={index} className={`timetable-row ${isToday ? 'active' : ''}`}>
+                      <span className="timetable-day">{item.name}</span>
+                      <span className="dotted-leader"></span>
+                      {/* Added <br> to split the time into two lines on mobile */}
+                      <span className="timetable-time">
+                        12:00 - 15:00 <br className="mobile-only-break" /> & 17:30 - 23:00
+                      </span>
+                    </div>
+                  );
+                })}
               </div>
 
               <p style={{ fontSize: '0.8rem', color: 'gray', marginTop: '1.5rem', fontStyle: 'italic' }}>
@@ -189,26 +191,30 @@ export default function HomePage() {
         </div>
 
         {/* SPECIALTIES */}
-        <div className="card">
+        <div className="card compact-card">
           <div className="card-grid">
             <div className="card-text">
               <span className="kicker">{t('specials.kicker')}</span>
               <h2 dangerouslySetInnerHTML={{ __html: t('specials.title') }} />
-              <p className="lead">{t('specials.desc')}</p>
+              {/* REMOVED THE LONG PARAGRAPH COMPLETELY */}
             </div>
-            <div className="card-content-grid">
+            
+            <div className="specialties-list">
               {[
-                { name: 'Taj Mahal Kabab', price: '18,90', img: '/gericht-grill-800.webp', tag: 'Bestseller', desc: 'Tender chicken, marinated in spices and grilled over charcoal.' },
-                { name: 'Chicken Makhni', price: '17,90', img: '/gericht-chicken-makhni-800.webp', tag: 'Classic', desc: 'Chicken in creamy butter-tomato sauce with Indian spices.' },
-                { name: 'Matar-Paneer', price: '14,90', img: '/gericht-matar-paneer-800.webp', tag: 'Vegetarian', desc: 'Indian cheese and green peas in a spicy tomato curry sauce.' },
+                { name: 'Taj Mahal Kabab', price: '18,90', img: '/gericht-grill-800.webp', tag: 'Bestseller', desc: 'Tender chicken grilled over charcoal.' },
+                { name: 'Chicken Makhni', price: '17,90', img: '/gericht-chicken-makhni-800.webp', tag: 'Classic', desc: 'Chicken in creamy butter-tomato sauce.' },
+                { name: 'Matar-Paneer', price: '14,90', img: '/gericht-matar-paneer-800.webp', tag: 'Vegetarian', desc: 'Indian cheese & peas in spicy curry.' },
+                { name: 'Tandoori Chicken', price: '16,90', img: '/gericht-grill-800.webp', tag: 'Spicy', desc: 'Marinated in yogurt and spices.' },
               ].map((s, i) => (
-                <div key={i} className="mini-specialty">
-                  <img src={s.img} alt={s.name} />
-                  <div>
+                <div key={i} className="specialty-row">
+                  <img src={s.img} alt={s.name} className="specialty-img" />
+                  <div className="specialty-info">
                     <h4>{s.name}</h4>
-                    <p style={{ fontSize: '0.75rem', color: 'gray', marginBottom: '4px' }}>{s.desc}</p>
-                    <span className="price-tag">€{s.price}</span>
-                    <span className="tag-label">{s.tag}</span>
+                    <p>{s.desc}</p>
+                    <div className="specialty-meta">
+                      <span className="specialty-price">€{s.price}</span>
+                      <span className="specialty-tag">{s.tag}</span>
+                    </div>
                   </div>
                 </div>
               ))}

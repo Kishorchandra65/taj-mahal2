@@ -40,7 +40,11 @@ main > .card { width: min(1200px, calc(100% - 3rem)); margin: 2rem auto; }
 @keyframes rise { 0% { transform: translateY(0) translateX(0); opacity: 0; } 15% { opacity: 1; } 100% { transform: translateY(-85vh) translateX(40px); opacity: 0; } }
 
 /* ---- Marquee ---- */
-.marquee-section { transform: rotate(-1.2deg) scale(1.03); margin: 1.5rem 0; box-shadow: 0 12px 40px rgba(0,0,0,.4); }
+.marquee-section { 
+  transform: none; /* REMOVED THE TILT */
+  margin: 0; /* Removed extra margins so it sits flush */
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+}
 .marquee-section:hover .marquee-track { animation-play-state: paused; }
 .marquee-track span { transition: transform .3s; }
 .marquee-track span:hover { transform: scale(1.15); }

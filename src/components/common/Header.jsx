@@ -39,16 +39,16 @@ export default function Header() {
     { path: '/contact', label: t('nav.contact') },
   ];
 
-  const headerBgColor = '#ffffff'; // White header
-  const textColor = '#333333'; // Dark text for visibility on white
-
   return (
     <>
-      {/* Header with white background */}
-      <header className={`global-header ${scrolled ? 'is-scrolled' : ''}`} style={{ background: headerBgColor, borderBottom: '1px solid #e0e0e0' }}>
+      <header className={`global-header ${scrolled ? 'is-scrolled' : ''}`} style={{ background: '#ffffff', borderBottom: '1px solid #e0e0e0' }}>
         <div className="header-inner">
           <Link to="/" className="header-logo">
-            <img src="/tajlogo12.png" alt="Taj Mahal Logo" style={{ height: '85px' }} />
+            {/* Desktop Logo */}
+            <img src="/tajlogo121.png" alt="Taj Mahal Logo" className="desktop-logo" style={{ height: '85px' }} />
+            
+            {/* Mobile Logo (Added for mobile view) */}
+            <img src="/tajlogoMobile1.png" alt="Taj Mahal Logo Mobile" className="mobile-logo" style={{ height: '50px' }} />
           </Link>
 
           <nav className="header-nav desktop-nav">
@@ -58,7 +58,7 @@ export default function Header() {
                 to={link.path}
                 className={location.pathname === link.path ? 'active' : ''}
                 style={{ 
-                  color: textColor, // Dark text for white background
+                  color: '#333333',
                   fontSize: '1.15rem',
                   fontWeight: '600',
                   letterSpacing: '0.5px'
@@ -70,14 +70,13 @@ export default function Header() {
           </nav>
 
           <div className="header-actions">
-            {/* Gold Shopping Bag Icon */}
             <button
               onClick={() => setIsCartOpen(true)}
               className="header-cart"
               aria-label="Open Cart"
               style={{ color: '#D4AF37', borderColor: '#D4AF37' }}
             >
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
                 <line x1="3" y1="6" x2="21" y2="6"></line>
                 <path d="M16 10a4 4 0 0 1-8 0"></path>
@@ -91,8 +90,8 @@ export default function Header() {
               style={{ 
                 fontSize: '1rem', 
                 padding: '10px 24px',
-                color: '#333333', // Dark text
-                backgroundColor: '#D4AF37', // Gold button background
+                color: '#333333',
+                backgroundColor: '#D4AF37',
                 border: 'none',
                 fontWeight: '700'
               }}
@@ -104,12 +103,11 @@ export default function Header() {
               className={`mobile-menu-btn ${mobileMenuOpen ? 'open' : ''}`}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle Menu"
-              style={{ borderColor: textColor }}
+              style={{ borderColor: '#333333' }}
             >
-              {/* Dark hamburger lines for white background */}
-              <span style={{ background: textColor }}></span>
-              <span style={{ background: textColor }}></span>
-              <span style={{ background: textColor }}></span>
+              <span style={{ background: '#333333' }}></span>
+              <span style={{ background: '#333333' }}></span>
+              <span style={{ background: '#333333' }}></span>
             </button>
           </div>
         </div>
@@ -119,10 +117,7 @@ export default function Header() {
       <div className={`mobile-drawer-backdrop ${mobileMenuOpen ? 'open' : ''}`} onClick={() => setMobileMenuOpen(false)} />
       <aside className={`mobile-drawer ${mobileMenuOpen ? 'open' : ''}`}>
         <div className="mobile-drawer-header">
-          {/* Note: You might want to keep the logo here, but if the logo is white text, 
-              it will be invisible on a white drawer. Consider changing the drawer background 
-              to dark in CSS if you keep this logo. */}
-          <img src="/tajlogo12.png" alt="Taj Mahal" style={{ height: '80px' }} />
+          <img src="/tajlogoMobile1.png" alt="Taj Mahal" style={{ height: '60px' }} />
         </div>
         <nav className="mobile-drawer-nav">
           {navLinks.map((link) => (
