@@ -88,15 +88,15 @@ export default function Header() {
               onClick={handleReserve} 
               className="btn-reserve desktop-reserve" 
               style={{ 
-                fontSize: '1rem', 
-                padding: '10px 24px',
+                fontSize: '0.95rem', 
+                padding: '10px 18px', // Reduced padding slightly to fit longer text
                 color: '#333333',
                 backgroundColor: '#D4AF37',
                 border: 'none',
                 fontWeight: '700'
               }}
             >
-              {t('nav.reserve')}
+              Reserve a Table
             </button>
 
             <button 
@@ -133,7 +133,7 @@ export default function Header() {
         </nav>
         <div className="mobile-drawer-footer">
           <button onClick={handleReserve} className="btn-reserve" style={{ width: '100%', backgroundColor: '#D4AF37', color: '#333333' }}>
-            {t('nav.reserve')}
+            Reserve a Table
           </button>
         </div>
       </aside>

@@ -602,3 +602,29 @@ body { margin: 0; background: var(--burgundy); font-family: var(--font-body); co
     padding: 8px 4px;
   }
 }
+
+@media (max-width: 900px) {
+  /* ... your other mobile CSS ... */
+
+  /* Fix the timetable for mobile */
+  .timetable-row {
+    padding: 8px 0; /* Remove side padding to give text more room */
+    gap: 2px;
+  }
+
+  .timetable-day {
+    font-size: 0.75rem; /* Smaller day text */
+    letter-spacing: 0;
+  }
+
+  /* Remove the dotted line on mobile to save space */
+  .dotted-leader {
+    display: none;
+  }
+
+  .timetable-time {
+    font-size: 0.75rem; /* Smaller time text */
+    white-space: nowrap; /* Forces it to stay on one line */
+    margin-left: auto; /* Pushes it to the right */
+  }
+}

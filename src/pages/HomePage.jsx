@@ -151,7 +151,6 @@ export default function HomePage() {
               <span className="kicker">{t('hours.kicker')}</span>
               <h2 dangerouslySetInnerHTML={{ __html: t('hours.title') }} />
               
-              {/* ONE SHORT LINE OF TEXT INSTEAD OF THE LONG PARAGRAPH */}
               <p className="lead" style={{ marginBottom: '1.5rem' }}>
                 We are open 7 days a week for lunch and dinner.
               </p>
@@ -173,9 +172,9 @@ export default function HomePage() {
                     <div key={index} className={`timetable-row ${isToday ? 'active' : ''}`}>
                       <span className="timetable-day">{item.name}</span>
                       <span className="dotted-leader"></span>
-                      {/* Added <br> to split the time into two lines on mobile */}
+                      {/* Removed the <br> so it stays on one line */}
                       <span className="timetable-time">
-                        12:00 - 15:00 <br className="mobile-only-break" /> & 17:30 - 23:00
+                        12:00 - 15:00 & 17:30 - 23:00
                       </span>
                     </div>
                   );
