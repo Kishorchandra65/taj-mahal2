@@ -15,8 +15,63 @@
     "orderBtn": "Online Bestellen (10% korting bij afhalen, 5% bij bezorgen)",
     "reserveBtn": "Reserveer een Tafel"
   },
-  "common": {
-    "loading": "Laden...",
-    "orderNow": "Nu Bestellen"
+  "offers": {
+    "kicker": "Exclusieve Aanbiedingen",
+    "title": "Bespaar op je <em>volgende feest</em>",
+    "desc": "We willen dat je optimaal van onze keuken kunt genieten. Daarom bieden we regelmatig speciale kortingen aan. Bespaar op je volgende bestelling en probeer onze nieuwe specialiteiten. Of je nu je eten komt afhalen of laat bezorgen, er is altijd een reden om te vieren met Taj Mahal.",
+    "pickup": "Afhalen",
+    "delivery": "Bezorgen",
+    "btn": "Nu Bestellen"
+  },
+  "hours": {
+    "kicker": "Open voor Jou",
+    "title": "Openingstijden",
+    "desc": "We zijn 7 dagen per week geopend voor lunch en diner. Onze keuken is altijd in beweging en bereidt verse maaltijden vanaf 12:00 uur. Of je nu komt voor een snelle lunchpauze of een ontspannen diner, er staat altijd een perfecte tafel voor je klaar.",
+    "days": "Maandag - Zondag",
+    "time": "12:00 – 15:00 & 17:30 – 23:00",
+    "phone": "Telefoon",
+    "email": "E-mail",
+    "note": "Online bestellen vermeldt andere tijden (Afhalen 12–15 & 17:30–22:30)."
+  },
+  "specials": {
+    "kicker": "Onze Specialiteiten",
+    "title": "Van de Tandoori <em>en de Curry Pan</em>",
+    "desc": "Onze meesterkoks hebben hun leven gewijd aan het perfectioneren van de Indiase kookkunst. Van de rokerige diepten van onze traditionele kleioven tot de rijke, langzaam gegaarde sauzen, elk gerecht is een meesterwerk. Ontdek onze meest geliefde creaties."
+  },
+  "menu": {
+    "kicker": "Het Menu",
+    "title": "Ons <em>Menu</em>",
+    "desc": "Ontdek ons volledige menu met een breed scala aan voorgerechten, traditionele curries, biryanis en versgebakken brood. Bestel online voor een snelle afhaling of laat ons de smaken van India direct bij je thuisbezorgen.",
+    "btn": "Bekijk Volledig Menu"
+  },
+  "cozy": {
+    "kicker": "Ons Restaurant",
+    "title": "Gezellig en <em>Traditioneel</em>",
+    "desc1": "Binnen zit je comfortabel in een traditionele sfeer en de obers staan voor je klaar. Op verzoek bezorgen we ook of houden we je eten klaar om af te halen.",
+    "desc2": "Bij Tajmahal koken we volgens traditionele Nepalese en Indiase recepten. Of je nu mild, medium-heet of pittig wilt, jij bepaalt hoe smaakvol je gerecht wordt. Geniet van Tandoori, Currys en vegetarische gerechten in een gezellige sfeer met familie en vrienden, of bestel online voor bezorging of afhaling.",
+    "sign": "— Jouw Tajmahal Oldenburg"
+  },
+  "testimonials": {
+    "kicker": "Gasten Ervaringen",
+    "title": "Wat onze <em>gasten zeggen</em>"
+  },
+  "reserve": {
+    "kicker": "Reserveer",
+    "title": "Boek <em>je tafel</em>",
+    "desc": "Ben je van plan om te komen? Vul hieronder je gegevens in en we nemen snel contact met je op om je tafel te bevestigen. We kijken ernaar uit je te verwelkomen bij de Taj Mahal!",
+    "name": "Je naam",
+    "phone": "Telefoonnummer",
+    "email": "E-mailadres",
+    "guests": "Aantal gasten",
+    "submit": "Verzoek Verzenden"
+  },
+  "marquee": {
+    "authentic": "Authentieke Indiase Keuken",
+    "tandoori": "Tandoori Specialiteiten",
+    "naan": "Vers Gebakken Naan",
+    "vegan": "Vegan & Vegetarische Opties",
+    "pickup": "10% Korting bij Afhalen",
+    "delivery": "5% Korting bij Bezorgen",
+    "open": "7 Dagen per Week Geopend"
   }
 }

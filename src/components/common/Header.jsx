@@ -9,7 +9,7 @@ export default function Header() {
   const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -32,10 +32,6 @@ export default function Header() {
     }, 100);
   };
 
-  const changeLanguage = (lng) => {
-    i18n.changeLanguage(lng);
-  };
-
   const navLinks = [
     { path: '/', label: t('nav.home') },
     { path: '/order', label: t('nav.order') },
@@ -43,12 +39,16 @@ export default function Header() {
     { path: '/contact', label: t('nav.contact') },
   ];
 
+  const headerBgColor = '#ffffff'; // White header
+  const textColor = '#333333'; // Dark text for visibility on white
+
   return (
     <>
-      <header className={`global-header ${scrolled ? 'is-scrolled' : ''}`}>
+      {/* Header with white background */}
+      <header className={`global-header ${scrolled ? 'is-scrolled' : ''}`} style={{ background: headerBgColor, borderBottom: '1px solid #e0e0e0' }}>
         <div className="header-inner">
           <Link to="/" className="header-logo">
-            <img src="/tajlogo.png" alt="Taj Mahal Logo" />
+            <img src="/tajlogo12.png" alt="Taj Mahal Logo" style={{ height: '85px' }} />
           </Link>
 
           <nav className="header-nav desktop-nav">
@@ -57,6 +57,12 @@ export default function Header() {
                 key={link.path}
                 to={link.path}
                 className={location.pathname === link.path ? 'active' : ''}
+                style={{ 
+                  color: textColor, // Dark text for white background
+                  fontSize: '1.15rem',
+                  fontWeight: '600',
+                  letterSpacing: '0.5px'
+                }}
               >
                 {link.label}
               </Link>
@@ -64,22 +70,33 @@ export default function Header() {
           </nav>
 
           <div className="header-actions">
-            {/* Language Switcher */}
-            <div className="language-switcher">
-              <button onClick={() => changeLanguage('en')} className={i18n.language.startsWith('en') ? 'active' : ''}>EN</button>
-              <span>|</span>
-              <button onClick={() => changeLanguage('nl')} className={i18n.language.startsWith('nl') ? 'active' : ''}>NL</button>
-            </div>
-
+            {/* Gold Shopping Bag Icon */}
             <button
               onClick={() => setIsCartOpen(true)}
               className="header-cart"
               aria-label="Open Cart"
+              style={{ color: '#D4AF37', borderColor: '#D4AF37' }}
             >
-              🛒 {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <path d="M16 10a4 4 0 0 1-8 0"></path>
+              </svg>
+              {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
             </button>
             
-            <button onClick={handleReserve} className="btn-reserve desktop-reserve">
+            <button 
+              onClick={handleReserve} 
+              className="btn-reserve desktop-reserve" 
+              style={{ 
+                fontSize: '1rem', 
+                padding: '10px 24px',
+                color: '#333333', // Dark text
+                backgroundColor: '#D4AF37', // Gold button background
+                border: 'none',
+                fontWeight: '700'
+              }}
+            >
               {t('nav.reserve')}
             </button>
 
@@ -87,10 +104,12 @@ export default function Header() {
               className={`mobile-menu-btn ${mobileMenuOpen ? 'open' : ''}`}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle Menu"
+              style={{ borderColor: textColor }}
             >
-              <span></span>
-              <span></span>
-              <span></span>
+              {/* Dark hamburger lines for white background */}
+              <span style={{ background: textColor }}></span>
+              <span style={{ background: textColor }}></span>
+              <span style={{ background: textColor }}></span>
             </button>
           </div>
         </div>
@@ -100,7 +119,10 @@ export default function Header() {
       <div className={`mobile-drawer-backdrop ${mobileMenuOpen ? 'open' : ''}`} onClick={() => setMobileMenuOpen(false)} />
       <aside className={`mobile-drawer ${mobileMenuOpen ? 'open' : ''}`}>
         <div className="mobile-drawer-header">
-          <img src="/tajlogo.png" alt="Taj Mahal" />
+          {/* Note: You might want to keep the logo here, but if the logo is white text, 
+              it will be invisible on a white drawer. Consider changing the drawer background 
+              to dark in CSS if you keep this logo. */}
+          <img src="/tajlogo12.png" alt="Taj Mahal" style={{ height: '80px' }} />
         </div>
         <nav className="mobile-drawer-nav">
           {navLinks.map((link) => (
@@ -108,13 +130,14 @@ export default function Header() {
               key={link.path}
               to={link.path}
               className={location.pathname === link.path ? 'active' : ''}
+              style={{ fontSize: '1.2rem' }}
             >
               {link.label}
             </Link>
           ))}
         </nav>
         <div className="mobile-drawer-footer">
-          <button onClick={handleReserve} className="btn-reserve" style={{ width: '100%' }}>
+          <button onClick={handleReserve} className="btn-reserve" style={{ width: '100%', backgroundColor: '#D4AF37', color: '#333333' }}>
             {t('nav.reserve')}
           </button>
         </div>

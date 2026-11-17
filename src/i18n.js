@@ -6,20 +6,20 @@ import en from './locales/en.json';
 import nl from './locales/nl.json';
 
 i18n
-  .use(LanguageDetector) // Detects browser language
+  .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     resources: {
       en: { translation: en },
       nl: { translation: nl },
     },
-    fallbackLng: 'en', // Default to English if translation is missing
+    fallbackLng: 'nl', // Default to Dutch
     interpolation: {
-      escapeValue: false, // React already protects from XSS
+      escapeValue: false,
     },
     detection: {
-      order: ['localStorage', 'navigator'], // Check local storage first, then browser
-      caches: ['localStorage'], // Save user choice
+      order: ['localStorage', 'navigator'],
+      caches: ['localStorage'],
     },
   });
 
