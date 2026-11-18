@@ -9,7 +9,7 @@ export default function Header() {
   const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -32,6 +32,12 @@ export default function Header() {
     }, 100);
   };
 
+  // Function to toggle language
+  const toggleLanguage = () => {
+    const nextLang = i18n.language === 'nl' ? 'en' : 'nl';
+    i18n.changeLanguage(nextLang);
+  };
+
   const navLinks = [
     { path: '/', label: t('nav.home') },
     { path: '/order', label: t('nav.order') },
@@ -44,10 +50,7 @@ export default function Header() {
       <header className={`global-header ${scrolled ? 'is-scrolled' : ''}`} style={{ background: '#ffffff', borderBottom: '1px solid #e0e0e0' }}>
         <div className="header-inner">
           <Link to="/" className="header-logo">
-            {/* Desktop Logo */}
             <img src="/tajlogo.png" alt="Taj Mahal Logo" className="desktop-logo" style={{ height: '85px' }} />
-            
-            {/* Mobile Logo (Added for mobile view) */}
             <img src="/tajlogo.png" alt="Taj Mahal Logo Mobile" className="mobile-logo" style={{ height: '50px' }} />
           </Link>
 
@@ -70,6 +73,33 @@ export default function Header() {
           </nav>
 
           <div className="header-actions">
+            {/* Language Switcher Button */}
+            <button 
+              onClick={toggleLanguage}
+              style={{
+                background: 'transparent',
+                border: '1px solid #333333',
+                color: '#333333',
+                padding: '6px 12px',
+                borderRadius: '50px',
+                fontWeight: '700',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                transition: 'all 0.3s'
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = '#333333'; e.currentTarget.style.color = '#ffffff'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#333333'; }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+              </svg>
+              {i18n.language === 'nl' ? 'EN' : 'NL'}
+            </button>
+
             <button
               onClick={() => setIsCartOpen(true)}
               className="header-cart"
@@ -89,14 +119,14 @@ export default function Header() {
               className="btn-reserve desktop-reserve" 
               style={{ 
                 fontSize: '0.95rem', 
-                padding: '10px 18px', // Reduced padding slightly to fit longer text
+                padding: '10px 18px',
                 color: '#333333',
                 backgroundColor: '#D4AF37',
                 border: 'none',
                 fontWeight: '700'
               }}
             >
-              Reserve a Table
+              {t('nav.reserve')}
             </button>
 
             <button 
@@ -130,10 +160,26 @@ export default function Header() {
               {link.label}
             </Link>
           ))}
+          {/* Mobile Language Switcher */}
+          <button 
+            onClick={toggleLanguage}
+            style={{
+              background: 'transparent',
+              border: '1px solid #333',
+              color: '#333',
+              padding: '10px',
+              marginTop: '1rem',
+              borderRadius: '8px',
+              fontWeight: '600',
+              cursor: 'pointer'
+            }}
+          >
+            {i18n.language === 'nl' ? 'Switch to English' : 'Schakel naar Nederlands'}
+          </button>
         </nav>
         <div className="mobile-drawer-footer">
           <button onClick={handleReserve} className="btn-reserve" style={{ width: '100%', backgroundColor: '#D4AF37', color: '#333333' }}>
-            Reserve a Table
+            {t('nav.reserve')}
           </button>
         </div>
       </aside>
