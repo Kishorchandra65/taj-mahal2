@@ -16,6 +16,7 @@ import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import PrivacyPage from './pages/PrivacyPage';
 import RevocationPage from './pages/RevocationPage';
+import CheckoutPage from './pages/CheckoutPage';
 
 import './styles/globals.css';
 
@@ -55,6 +56,8 @@ export default function App() {
             <Route path="contact" element={<ContactPage />} />
             <Route path="privacy" element={<PrivacyPage />} />
             <Route path="revocation" element={<RevocationPage />} />
+            <Route path="checkout" element={<CheckoutPage />} />
+
           </Route>
         </Routes>
       </BrowserRouter>

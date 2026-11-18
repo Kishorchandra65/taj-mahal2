@@ -1,5 +1,5 @@
 import { useCart } from "../../context/CartContext";
-
+import { Link } from "react-router-dom";
 
 export default function CartDrawer() {
   const { cart, isCartOpen, setIsCartOpen, updateQuantity, removeFromCart, cartTotal } = useCart();
@@ -28,6 +28,7 @@ export default function CartDrawer() {
                 <img 
                   src={item.image_url?.startsWith('http') ? item.image_url : `http://127.0.0.1:8000${item.image_url}`} 
                   alt={item.name} 
+                  onError={(e) => { e.target.onerror = null; e.target.src = "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=150&q=80"; }}
                 />
                 <div style={{ flex: 1 }}>
                   <h4 style={{ marginBottom: '0.2rem' }}>{item.name}</h4>
@@ -55,9 +56,15 @@ export default function CartDrawer() {
               <span>Total</span>
               <span>€{cartTotal.toFixed(2)}</span>
             </div>
-            <button className="btn btn-primary" style={{ width: '100%' }}>
+            {/* UPDATED: Use Link to navigate to checkout and close the drawer */}
+            <Link 
+              to="/checkout" 
+              onClick={() => setIsCartOpen(false)} 
+              className="btn btn-primary" 
+              style={{ width: '100%', display: 'block', textAlign: 'center' }}
+            >
               Proceed to Checkout
-            </button>
+            </Link>
           </div>
         )}
       </div>

@@ -2,26 +2,24 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import API from '../api/axios';
-import { useCart } from '../context/CartContext'; // Added Cart Context
+import { useCart } from '../context/CartContext';
 
 // FALLBACK DATA
 const FALLBACK_MENU = [
-  // APPETIZERS
   { id: '1', name: 'Vegetable Pakora', desc: 'Various vegetables with Indian spices', price: 6.50, category: 'APPETIZERS', isVeg: true },
   { id: '2', name: 'Pakora fish', desc: 'Redfish marinated with Indian herbs', price: 7.50, category: 'APPETIZERS', isVeg: false },
   { id: '3', name: 'Onion Bhaji', desc: 'Balls made from onion strips with bell peppers and ginger', price: 6.50, category: 'APPETIZERS', isVeg: true },
   { id: '4', name: 'Mumtaj Mix Pakora', desc: 'Vegetarian surprise appetizer plate', price: 10.50, category: 'APPETIZERS', isVeg: true },
   { id: '5', name: 'Paneer Pakora', desc: 'Homemade Indian cheese with spices', price: 7.00, category: 'APPETIZERS', isVeg: true },
   { id: '6', name: 'King Prawn Pakora', desc: 'Scampi marinated in exotic spices', price: 11.50, category: 'APPETIZERS', isVeg: false },
-
-  // SOUPS AND SALADS
+  { id: '7', name: 'Chicken Pakora', desc: 'Spicy chicken fillet strips', price: 7.50, category: 'APPETIZERS', isVeg: false },
+  { id: '8', name: 'Paneer tikka', desc: 'Homemade Indian cheese, marinated and grilled', price: 11.00, category: 'APPETIZERS', isVeg: true },
+  { id: '9', name: 'Scampi Tikka', desc: 'Scampi marinated in spices and grilled', price: 12.90, category: 'APPETIZERS', isVeg: false },
   { id: '10', name: 'Sabzi Soup', desc: 'Vegetable soup with Indian spices', price: 4.50, category: 'SOUPS AND SALADS', isVeg: true },
   { id: '11', name: 'Mixed salad', desc: 'Fresh mixed salad', price: 4.50, category: 'SOUPS AND SALADS', isVeg: true },
   { id: '12', name: 'Daal Soup', desc: 'Lentil soup', price: 5.50, category: 'SOUPS AND SALADS', isVeg: true },
   { id: '13', name: 'Indian salad', desc: 'Spicy Indian salad', price: 5.90, category: 'SOUPS AND SALADS', isVeg: true },
   { id: '14', name: 'Tomato Soup', desc: 'Tomato soup with exotic spices', price: 5.50, category: 'SOUPS AND SALADS', isVeg: true },
-  
-  // MAIN COURSES
   { id: '15', name: 'Matar-Paneer', desc: 'Indischer Frischkäse und grüne Erbsen in würziger Tomaten-Curry-Sauce', price: 14.90, category: 'MAIN COURSES', isVeg: true },
   { id: '16', name: 'Chicken Makhni', desc: 'Hähnchen in cremiger Butter-Tomaten-Sauce', price: 17.90, category: 'MAIN COURSES', isVeg: false },
   { id: '17', name: 'Taj Mahal Kabab', desc: 'Mariniertes Hähnchenfleisch, über Holzkohle gegrillt', price: 18.90, category: 'MAIN COURSES', isVeg: false },
@@ -29,10 +27,21 @@ const FALLBACK_MENU = [
 
 export default function HomePage() {
   const { t } = useTranslation();
-  const { addToCart } = useCart(); // Initialize addToCart function from context
+  const { addToCart } = useCart();
   const [menu, setMenu] = useState([]);
   const [activeMenuTab, setActiveMenuTab] = useState('APPETIZERS');
   const [activeTestimonial, setActiveTestimonial] = useState(0);
+
+  // --- RESERVATION STATE (Correctly placed inside the component) ---
+  const [reservationData, setReservationData] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    date: '',
+    time: '',
+    guests: 1
+  });
+  const [reserving, setReserving] = useState(false);
 
   useEffect(() => {
     API.get('/menu')
@@ -53,6 +62,33 @@ export default function HomePage() {
   ];
 
   const filteredMenu = menu.filter(item => item.category === activeMenuTab);
+
+  // --- RESERVATION SUBMIT HANDLER ---
+  const handleReservationSubmit = async (e) => {
+    e.preventDefault();
+    setReserving(true);
+    try {
+      const payload = {
+        name: reservationData.name,
+        phone: reservationData.phone,
+        email: reservationData.email,
+        date: reservationData.date,
+        time: reservationData.time,
+        guests: parseInt(reservationData.guests),
+        subject: "Table Reservation",
+        message: ""
+      };
+      
+      await API.post('/reservations', payload);
+      alert('Reservation sent successfully! We will confirm shortly.');
+      setReservationData({ name: '', phone: '', email: '', date: '', time: '', guests: 1 });
+    } catch (error) {
+      console.error(error);
+      alert('Failed to send reservation. Please try again.');
+    } finally {
+      setReserving(false);
+    }
+  };
 
   return (
     <>
@@ -118,7 +154,6 @@ export default function HomePage() {
               <span>✦ Aromatic Curries & Biryanis</span>
               <span>✦ Freshly Baked Garlic Naan</span>
               <span>✦ Vegan & Vegetarian Delights</span>
-              <span>✦ Authentic Indian Recipes</span>
               <span>✦ Warm & Cozy Atmosphere</span>
               <span>✦ Open 7 Days a Week</span>
             </div>
@@ -151,10 +186,6 @@ export default function HomePage() {
               <span className="kicker">{t('hours.kicker')}</span>
               <h2 dangerouslySetInnerHTML={{ __html: t('hours.title') }} />
               
-              <p className="lead" style={{ marginBottom: '1.5rem' }}>
-                We are open 7 days a week for lunch and dinner.
-              </p>
-              
               <div className="modern-timetable">
                 {[
                   { name: 'Sunday', dayIndex: 0 },
@@ -172,10 +203,7 @@ export default function HomePage() {
                     <div key={index} className={`timetable-row ${isToday ? 'active' : ''}`}>
                       <span className="timetable-day">{item.name}</span>
                       <span className="dotted-leader"></span>
-                      {/* Removed the <br> so it stays on one line */}
-                      <span className="timetable-time">
-                        12:00 - 15:00 & 17:30 - 23:00
-                      </span>
+                      <span className="timetable-time">12:00 - 15:00 & 17:30 - 23:00</span>
                     </div>
                   );
                 })}
@@ -195,7 +223,6 @@ export default function HomePage() {
             <div className="card-text">
               <span className="kicker">{t('specials.kicker')}</span>
               <h2 dangerouslySetInnerHTML={{ __html: t('specials.title') }} />
-              {/* REMOVED THE LONG PARAGRAPH COMPLETELY */}
             </div>
             
             <div className="specialties-list">
@@ -276,7 +303,6 @@ export default function HomePage() {
                       <span className="menu-dotted-leader"></span>
                       <span className="menu-item-price">{item.price.toFixed(2)} €</span>
                       
-                      {/* ADD TO CART BUTTON */}
                       <button 
                         onClick={() => addToCart({ ...item, quantity: 1 })}
                         className="menu-add-btn"
@@ -288,7 +314,6 @@ export default function HomePage() {
                           <line x1="5" y1="12" x2="19" y2="12"></line>
                         </svg>
                       </button>
-
                     </div>
                     <p className="menu-item-desc">{item.desc || item.description}</p>
                   </div>
@@ -345,16 +370,53 @@ export default function HomePage() {
               <span className="kicker">{t('reserve.kicker')}</span>
               <h2 dangerouslySetInnerHTML={{ __html: t('reserve.title') }} />
               <p className="lead">{t('reserve.desc')}</p>
-              <form className="reserve-form" onSubmit={(e) => { e.preventDefault(); alert('Reservation sent!'); }}>
-                <input type="text" placeholder={t('reserve.name')} required />
-                <input type="tel" placeholder={t('reserve.phone')} required />
-                <input type="email" placeholder={t('reserve.email')} required />
+              <form className="reserve-form" onSubmit={handleReservationSubmit}>
+                <input 
+                  type="text" 
+                  placeholder={t('reserve.name')} 
+                  value={reservationData.name}
+                  onChange={(e) => setReservationData({...reservationData, name: e.target.value})}
+                  required 
+                />
+                <input 
+                  type="tel" 
+                  placeholder={t('reserve.phone')} 
+                  value={reservationData.phone}
+                  onChange={(e) => setReservationData({...reservationData, phone: e.target.value})}
+                  required 
+                />
+                <input 
+                  type="email" 
+                  placeholder={t('reserve.email')} 
+                  value={reservationData.email}
+                  onChange={(e) => setReservationData({...reservationData, email: e.target.value})}
+                  required 
+                />
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-                  <input type="date" required />
-                  <input type="time" required />
+                  <input 
+                    type="date" 
+                    value={reservationData.date}
+                    onChange={(e) => setReservationData({...reservationData, date: e.target.value})}
+                    required 
+                  />
+                  <input 
+                    type="time" 
+                    value={reservationData.time}
+                    onChange={(e) => setReservationData({...reservationData, time: e.target.value})}
+                    required 
+                  />
                 </div>
-                <input type="number" placeholder={t('reserve.guests')} min="1" max="20" required />
-                <button type="submit" className="btn btn-primary btn-shimmer">{t('reserve.submit')}</button>
+                <input 
+                  type="number" 
+                  placeholder={t('reserve.guests')} 
+                  min="1" max="20" 
+                  value={reservationData.guests}
+                  onChange={(e) => setReservationData({...reservationData, guests: e.target.value})}
+                  required 
+                />
+                <button type="submit" className="btn btn-primary btn-shimmer" disabled={reserving}>
+                  {reserving ? 'Sending...' : t('reserve.submit')}
+                </button>
               </form>
             </div>
             <div className="card-image"><img src="/aussen-800.webp" alt="Restaurant outside" /></div>
