@@ -2,9 +2,11 @@ import { useState } from 'react';
 import { useCart } from '../context/CartContext';
 import { useNavigate } from 'react-router-dom';
 import API from '../api/axios';
+import { useTranslation } from 'react-i18next';
 
 export default function CheckoutPage() {
   const { cart, cartTotal, clearCart } = useCart();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -13,14 +15,14 @@ export default function CheckoutPage() {
     address: '',
     paymentMethod: 'cod' // Default to Cash on Delivery
   });
-
+  
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (cart.length === 0) return alert("Your cart is empty");
+    if (cart.length === 0) return alert(t('checkout.emptyCart'));
 
     setLoading(true);
 
@@ -39,14 +41,13 @@ export default function CheckoutPage() {
         const { order_id, key_id } = razorpayRes.data;
 
         const options = {
-            key: key_id, // Test Key ID from backend
+            key: key_id,
             amount: cartTotal * 100,
-            currency: "INR",
+            currency: "EUR", // Changed to EUR since your site uses €
             name: "Taj Mahal Oldenburg",
             description: "Food Order",
             order_id: order_id,
             handler: async function (response) {
-            // This runs AFTER payment is successful
             try {
                 const finalOrderData = {
                 customer_name: formData.name,
@@ -70,24 +71,22 @@ export default function CheckoutPage() {
             contact: formData.phone,
             },
             theme: {
-            color: "#d9ac51" // Your gold brand color
+            color: "#d9ac51"
             }
         };
 
         const rzp = new window.Razorpay(options);
         rzp.open();
         
-        // Note: We don't setLoading(false) here because the handler function takes over
-        // If the user closes the modal, we need to reset loading
         rzp.on('payment.failed', function (response){
             alert("Payment failed. Please try again.");
             setLoading(false);
         });
         
-        return; // Stop execution here, the handler will finish the process
+        return; 
         }
 
-        // 3. COD Flow (Runs immediately)
+        // 3. COD Flow
         const orderData = {
         customer_name: formData.name,
         phone: formData.phone,
@@ -107,7 +106,6 @@ export default function CheckoutPage() {
         console.error(error);
         alert('Failed to place order. Please try again.');
     } finally {
-        // Only reset loading if we didn't open the Razorpay modal
         if (formData.paymentMethod !== 'razorpay') {
         setLoading(false);
         }
@@ -115,13 +113,12 @@ export default function CheckoutPage() {
     };
 
 
-
   if (cart.length === 0) {
     return (
       <div className="main-wrapper" style={{ textAlign: 'center', marginTop: '5rem', minHeight: '60vh' }}>
-        <h2>Your cart is empty</h2>
+        <h2>{t('checkout.emptyCart')}</h2>
         <button onClick={() => navigate('/order')} className="btn btn-primary" style={{ marginTop: '1rem' }}>
-          Go to Menu
+          {t('checkout.goToMenu')}
         </button>
       </div>
     );
@@ -130,14 +127,18 @@ export default function CheckoutPage() {
   return (
     <div className="main-wrapper" style={{ marginTop: '4rem', maxWidth: '800px' }}>
       <div className="card" style={{ minHeight: 'auto', padding: '3rem' }}>
-        <h2 style={{ textAlign: 'center', marginBottom: '2rem', fontFamily: 'var(--font-display)' }}>Checkout</h2>
+        <h2 style={{ textAlign: 'center', marginBottom: '2rem', fontFamily: 'var(--font-display)' }}>
+          {t('checkout.title')}
+        </h2>
         
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           
           {/* Customer Details */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
             <div>
-              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600' }}>Full Name</label>
+              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600' }}>
+                {t('checkout.fullName')}
+              </label>
               <input 
                 type="text" name="name" required 
                 value={formData.name} onChange={handleChange}
@@ -145,7 +146,9 @@ export default function CheckoutPage() {
               />
             </div>
             <div>
-              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600' }}>Phone Number</label>
+              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600' }}>
+                {t('checkout.phoneNumber')}
+              </label>
               <input 
                 type="tel" name="phone" required 
                 value={formData.phone} onChange={handleChange}
@@ -155,7 +158,9 @@ export default function CheckoutPage() {
           </div>
 
           <div>
-            <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600' }}>Delivery Address</label>
+            <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600' }}>
+              {t('checkout.deliveryAddress')}
+            </label>
             <textarea 
               name="address" required rows="3"
               value={formData.address} onChange={handleChange}
@@ -165,28 +170,28 @@ export default function CheckoutPage() {
 
           {/* Payment Method */}
           <div style={{ background: '#f9f9f9', padding: '1.5rem', borderRadius: '8px' }}>
-            <h4 style={{ marginBottom: '1rem' }}>Payment Method</h4>
+            <h4 style={{ marginBottom: '1rem' }}>{t('checkout.paymentMethod')}</h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <label style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}>
                 <input 
                   type="radio" name="paymentMethod" value="cod" 
                   checked={formData.paymentMethod === 'cod'} onChange={handleChange} 
                 />
-                <span>Cash on Delivery (COD)</span>
+                <span>{t('checkout.cod')}</span>
               </label>
               <label style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}>
                 <input 
                   type="radio" name="paymentMethod" value="razorpay" 
                   checked={formData.paymentMethod === 'razorpay'} onChange={handleChange} 
                 />
-                <span>Pay Online (Razorpay / Card)</span>
+                <span>{t('checkout.razorpay')}</span>
               </label>
             </div>
           </div>
 
           {/* Order Summary */}
           <div style={{ borderTop: '1px solid #eee', paddingTop: '1.5rem' }}>
-            <h4 style={{ marginBottom: '1rem' }}>Order Summary</h4>
+            <h4 style={{ marginBottom: '1rem' }}>{t('checkout.orderSummary')}</h4>
             {cart.map(item => (
               <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontSize: '0.9rem' }}>
                 <span>{item.quantity}x {item.name}</span>
@@ -194,13 +199,13 @@ export default function CheckoutPage() {
               </div>
             ))}
             <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold', fontSize: '1.2rem', marginTop: '1rem', borderTop: '1px solid #eee', paddingTop: '1rem' }}>
-              <span>Total</span>
+              <span>{t('checkout.total')}</span>
               <span>€{cartTotal.toFixed(2)}</span>
             </div>
           </div>
 
           <button type="submit" className="btn btn-primary" disabled={loading} style={{ width: '100%', padding: '16px', fontSize: '1.1rem' }}>
-            {loading ? 'Processing...' : `Place Order (€${cartTotal.toFixed(2)})`}
+            {loading ? t('checkout.processing') : `${t('checkout.placeOrder')} (€${cartTotal.toFixed(2)})`}
           </button>
         </form>
       </div>

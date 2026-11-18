@@ -4,7 +4,7 @@
     "order": "Order Online",
     "about": "About Us",
     "contact": "Contact",
-    "reserve": "Reserve"
+    "reserve": "Reserve a Table"
   },
   "hero": {
     "badge": "Indian Tandoori Restaurant · Oldenburg",
@@ -15,8 +15,78 @@
     "orderBtn": "Online Order (10% off Pickup, 5% off Delivery)",
     "reserveBtn": "Reserve a Table"
   },
-  "common": {
-    "loading": "Loading...",
-    "orderNow": "Order Now"
+  "offers": {
+    "kicker": "Exclusive Offers",
+    "title": "Save on your <em>next feast</em>",
+    "desc": "We want you to get the most out of our kitchen. That's why we regularly offer special discounts. Save on your next order and try our new specialties. Whether you pick up your food or have it delivered, there is always a reason to celebrate with Taj Mahal.",
+    "pickup": "Pickup",
+    "delivery": "Delivery",
+    "btn": "Order Now"
+  },
+  "hours": {
+    "kicker": "Open for You",
+    "title": "Opening Hours",
+    "desc": "We are open 7 days a week for lunch and dinner. Our kitchen is always in motion and prepares fresh meals from 12:00 PM. Whether you come for a quick lunch break or a relaxed dinner, a perfect table is always ready for you.",
+    "days": "Monday - Sunday",
+    "time": "12:00 – 15:00 & 17:30 – 23:00",
+    "phone": "Phone",
+    "email": "Email",
+    "note": "Online ordering lists different times (Pickup 12–15 & 17:30–22:30)."
+  },
+  "specials": {
+    "kicker": "Our Specialties",
+    "title": "From the Tandoori <em>and the Curry Pan</em>",
+    "desc": "Our master chefs have dedicated their lives to perfecting the art of Indian cooking. From the smoky depths of our traditional clay oven to the rich, slow-cooked sauces, every dish is a masterpiece. Discover our most beloved creations."
+  },
+  "menu": {
+    "kicker": "The Menu",
+    "title": "Our <em>Menu</em>",
+    "desc": "Discover our full menu with a wide range of appetizers, traditional curries, biryanis and freshly baked bread. Order online for quick pickup or let us deliver the flavors of India directly to your home.",
+    "btn": "View Full Menu"
+  },
+  "cozy": {
+    "kicker": "Our Restaurant",
+    "title": "Cozy and <em>Traditional</em>",
+    "desc1": "Inside you sit comfortably in a traditional atmosphere and the waiters are ready for you. On request we also deliver or keep your food ready for pickup.",
+    "desc2": "At Tajmahal we cook according to traditional Nepalese and Indian recipes. Whether you want mild, medium-hot or spicy, you decide how flavorful your dish will be. Enjoy Tandoori, Curries and vegetarian dishes in a cozy atmosphere with family and friends, or order online for delivery or pickup.",
+    "sign": "— Your Tajmahal Oldenburg"
+  },
+  "testimonials": {
+    "kicker": "Guest Experiences",
+    "title": "What our <em>guests say</em>"
+  },
+  "reserve": {
+    "kicker": "Reserve",
+    "title": "Book <em>your table</em>",
+    "desc": "Are you planning to come? Fill in your details below and we will contact you shortly to confirm your table. We look forward to welcoming you at the Taj Mahal!",
+    "name": "Your name",
+    "phone": "Phone number",
+    "email": "Email address",
+    "guests": "Number of guests",
+    "submit": "Send Request"
+  },
+  "marquee": {
+    "authentic": "Authentic Indian Cuisine",
+    "tandoori": "Tandoori Specialties",
+    "naan": "Freshly Baked Naan",
+    "vegan": "Vegan & Vegetarian Options",
+    "pickup": "10% Off Pickup",
+    "delivery": "5% Off Delivery",
+    "open": "Open 7 Days a Week"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "emptyCart": "Your cart is empty",
+    "goToMenu": "Go to Menu",
+    "fullName": "Full Name",
+    "phoneNumber": "Phone Number",
+    "deliveryAddress": "Delivery Address",
+    "paymentMethod": "Payment Method",
+    "cod": "Cash on Delivery (COD)",
+    "razorpay": "Pay Online (Razorpay / Card)",
+    "orderSummary": "Order Summary",
+    "total": "Total",
+    "placeOrder": "Place Order",
+    "processing": "Processing..."
   }
 }

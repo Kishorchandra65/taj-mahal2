@@ -4,7 +4,7 @@
     "order": "Online Bestellen",
     "about": "Over Ons",
     "contact": "Contact",
-    "reserve": "Reserveer"
+    "reserve": "Reserveer een Tafel"
   },
   "hero": {
     "badge": "Indiaas Tandoori Restaurant · Oldenburg",
@@ -73,5 +73,20 @@
     "pickup": "10% Korting bij Afhalen",
     "delivery": "5% Korting bij Bezorgen",
     "open": "7 Dagen per Week Geopend"
+  },
+  "checkout": {
+    "title": "Afrekenen",
+    "emptyCart": "Je winkelwagen is leeg",
+    "goToMenu": "Naar het Menu",
+    "fullName": "Volledige Naam",
+    "phoneNumber": "Telefoonnummer",
+    "deliveryAddress": "Bezorgadres",
+    "paymentMethod": "Betaalmethode",
+    "cod": "Contant betalen bij levering (COD)",
+    "razorpay": "Online betalen (Razorpay / Kaart)",
+    "orderSummary": "Besteloverzicht",
+    "total": "Totaal",
+    "placeOrder": "Bestelling Plaatsen",
+    "processing": "Verwerken..."
   }
 }
