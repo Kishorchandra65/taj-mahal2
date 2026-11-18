@@ -10,7 +10,7 @@ export default function Footer() {
         
         {/* Column 1: Brand */}
         <div className="footer-brand">
-          <img src="/tajlogo121.png" alt="Taj Mahal" />
+          <img src="/tajlogo.png" alt="Taj Mahal" />
           <p>Authentic Indian cuisine in the heart of Oldenburg since 1978.</p>
         </div>
 

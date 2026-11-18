@@ -45,10 +45,10 @@ export default function Header() {
         <div className="header-inner">
           <Link to="/" className="header-logo">
             {/* Desktop Logo */}
-            <img src="/tajlogo121.png" alt="Taj Mahal Logo" className="desktop-logo" style={{ height: '85px' }} />
+            <img src="/tajlogo.png" alt="Taj Mahal Logo" className="desktop-logo" style={{ height: '85px' }} />
             
             {/* Mobile Logo (Added for mobile view) */}
-            <img src="/tajlogoMobile1.png" alt="Taj Mahal Logo Mobile" className="mobile-logo" style={{ height: '50px' }} />
+            <img src="/tajlogo.png" alt="Taj Mahal Logo Mobile" className="mobile-logo" style={{ height: '50px' }} />
           </Link>
 
           <nav className="header-nav desktop-nav">
@@ -117,7 +117,7 @@ export default function Header() {
       <div className={`mobile-drawer-backdrop ${mobileMenuOpen ? 'open' : ''}`} onClick={() => setMobileMenuOpen(false)} />
       <aside className={`mobile-drawer ${mobileMenuOpen ? 'open' : ''}`}>
         <div className="mobile-drawer-header">
-          <img src="/tajlogoMobile1.png" alt="Taj Mahal" style={{ height: '60px' }} />
+          <img src="/tajlogo.png" alt="Taj Mahal" style={{ height: '60px' }} />
         </div>
         <nav className="mobile-drawer-nav">
           {navLinks.map((link) => (
