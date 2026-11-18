@@ -4,6 +4,7 @@ import { initReactI18next } from 'react-i18next';
 
 import en from './locales/en.json';
 import nl from './locales/nl.json';
+import de from './locales/de.json'; 
 
 i18n
   // .use(LanguageDetector) // REMOVE this to stop auto-detecting English
@@ -12,6 +13,7 @@ i18n
     resources: {
       en: { translation: en },
       nl: { translation: nl },
+      de: { translation: de },
     },
     lng: 'nl', // <--- THIS FORCES DUTCH AS THE DEFAULT
     fallbackLng: 'nl', // Fallback to Dutch if a key is missing

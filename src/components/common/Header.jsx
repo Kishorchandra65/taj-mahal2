@@ -32,10 +32,9 @@ export default function Header() {
     }, 100);
   };
 
-  // Function to toggle language
-  const toggleLanguage = () => {
-    const nextLang = i18n.language === 'nl' ? 'en' : 'nl';
-    i18n.changeLanguage(nextLang);
+  // Function to change language
+  const changeLanguage = (e) => {
+    i18n.changeLanguage(e.target.value);
   };
 
   const navLinks = [
@@ -73,32 +72,27 @@ export default function Header() {
           </nav>
 
           <div className="header-actions">
-            {/* Language Switcher Button */}
-            <button 
-              onClick={toggleLanguage}
-              style={{
-                background: 'transparent',
-                border: '1px solid #333333',
-                color: '#333333',
-                padding: '6px 12px',
-                borderRadius: '50px',
-                fontWeight: '700',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '6px',
-                transition: 'all 0.3s'
-              }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = '#333333'; e.currentTarget.style.color = '#ffffff'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#333333'; }}
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="2" y1="12" x2="22" y2="12"></line>
-                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-              </svg>
-              {i18n.language === 'nl' ? 'EN' : 'NL'}
-            </button>
+            {/* Language Switcher Dropdown */}
+            <div className="language-selector" style={{ marginRight: '5px' }}>
+              <select 
+                value={i18n.language} 
+                onChange={changeLanguage}
+                style={{
+                  background: 'transparent',
+                  border: '1px solid #333333',
+                  color: '#333333',
+                  padding: '6px 10px',
+                  borderRadius: '50px',
+                  fontWeight: '700',
+                  cursor: 'pointer',
+                  outline: 'none'
+                }}
+              >
+                <option value="nl">🇳🇱 NL</option>
+                <option value="en">🇬🇧 EN</option>
+                <option value="de">🇩🇪 DE</option>
+              </select>
+            </div>
 
             <button
               onClick={() => setIsCartOpen(true)}
@@ -160,22 +154,13 @@ export default function Header() {
               {link.label}
             </Link>
           ))}
+          
           {/* Mobile Language Switcher */}
-          <button 
-            onClick={toggleLanguage}
-            style={{
-              background: 'transparent',
-              border: '1px solid #333',
-              color: '#333',
-              padding: '10px',
-              marginTop: '1rem',
-              borderRadius: '8px',
-              fontWeight: '600',
-              cursor: 'pointer'
-            }}
-          >
-            {i18n.language === 'nl' ? 'Switch to English' : 'Schakel naar Nederlands'}
-          </button>
+          <div style={{ display: 'flex', gap: '10px', marginTop: '1rem' }}>
+            <button onClick={() => i18n.changeLanguage('nl')} style={{ flex: 1, padding: '8px', border: '1px solid #333', borderRadius: '6px', background: i18n.language === 'nl' ? '#D4AF37' : 'transparent', color: '#333', fontWeight: 'bold' }}>NL</button>
+            <button onClick={() => i18n.changeLanguage('en')} style={{ flex: 1, padding: '8px', border: '1px solid #333', borderRadius: '6px', background: i18n.language === 'en' ? '#D4AF37' : 'transparent', color: '#333', fontWeight: 'bold' }}>EN</button>
+            <button onClick={() => i18n.changeLanguage('de')} style={{ flex: 1, padding: '8px', border: '1px solid #333', borderRadius: '6px', background: i18n.language === 'de' ? '#D4AF37' : 'transparent', color: '#333', fontWeight: 'bold' }}>DE</button>
+          </div>
         </nav>
         <div className="mobile-drawer-footer">
           <button onClick={handleReserve} className="btn-reserve" style={{ width: '100%', backgroundColor: '#D4AF37', color: '#333333' }}>

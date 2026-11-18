@@ -1,0 +1,92 @@
+{
+  "nav": {
+    "home": "Startseite",
+    "order": "Online Bestellen",
+    "about": "Über Uns",
+    "contact": "Kontakt",
+    "reserve": "Tisch Reservieren"
+  },
+  "hero": {
+    "badge": "Indisches Tandoori Restaurant · Oldenburg",
+    "title1": "Die Aromen von",
+    "title2": "Indien",
+    "title3": "mitten im Herzen von Oldenburg",
+    "subtitle": "Taj Mahal in Oldenburg: Indische Küche mit Tandoori, Curry und vegetarischen Gerichten, täglich geöffnet für Mittag- und Abendessen.",
+    "orderBtn": "Online Bestellen (10% Rabatt bei Abholung, 5% bei Lieferung)",
+    "reserveBtn": "Tisch Reservieren"
+  },
+  "offers": {
+    "kicker": "Exklusive Angebote",
+    "title": "Sparen Sie bei Ihrem <em>nächsten Fest</em>",
+    "desc": "Wir möchten, dass Sie unsere Küche in vollen Zügen genießen können. Deshalb bieten wir regelmäßig spezielle Rabatte an. Sparen Sie bei Ihrer nächsten Bestellung und probieren Sie unsere neuen Spezialitäten. Ob Sie Ihr Essen abholen oder liefern lassen, es gibt immer einen Grund, mit Taj Mahal zu feiern.",
+    "pickup": "Abholung",
+    "delivery": "Lieferung",
+    "btn": "Jetzt Bestellen"
+  },
+  "hours": {
+    "kicker": "Für Sie Geöffnet",
+    "title": "Öffnungszeiten",
+    "desc": "Wir sind 7 Tage die Woche für Mittag- und Abendessen geöffnet. Unsere Küche ist immer in Bewegung und bereitet ab 12:00 Uhr frische Mahlzeiten zu.",
+    "days": "Montag - Sonntag",
+    "time": "12:00 – 15:00 & 17:30 – 23:00",
+    "phone": "Telefon",
+    "email": "E-Mail",
+    "note": "Beim Online-Bestellen gelten andere Zeiten (Abholung 12–15 & 17:30–22:30)."
+  },
+  "specials": {
+    "kicker": "Unsere Spezialitäten",
+    "title": "Aus dem Tandoori <em>und der Curry-Pfanne</em>",
+    "desc": "Unsere Meisterköche haben ihr Leben der Perfektionierung der indischen Kochkunst gewidmet. Von den rauchigen Tiefen unseres traditionellen Lehmofens bis zu den reichhaltigen, langsam gegarten Saucen ist jedes Gericht ein Meisterwerk."
+  },
+  "menu": {
+    "kicker": "Die Speisekarte",
+    "title": "Unsere <em>Speisekarte</em>",
+    "desc": "Entdecken Sie unsere vollständige Speisekarte mit einer breiten Auswahl an Vorspeisen, traditionellen Currys, Biryanis und frisch gebackenem Brot. Bestellen Sie online für eine schnelle Abholung oder lassen Sie sich die Aromen Indiens direkt nach Hause liefern.",
+    "btn": "Vollständige Speisekarte Ansehen"
+  },
+  "cozy": {
+    "kicker": "Unser Restaurant",
+    "title": "Gemütlich und <em>Traditionell</em>",
+    "desc1": "Drinnen sitzen Sie bequem in traditioneller Atmosphäre und die Kellner stehen für Sie bereit. Auf Wunsch liefern wir auch oder halten Ihr Essen zur Abholung bereit.",
+    "desc2": "Im Tajmahal kochen wir nach traditionellen nepalesischen und indischen Rezepten. Ob mild, mittelscharf oder scharf, Sie bestimmen, wie würzig Ihr Gericht wird.",
+    "sign": "— Ihr Tajmahal Oldenburg"
+  },
+  "testimonials": {
+    "kicker": "Gasterfahrungen",
+    "title": "Was unsere <em>Gäste sagen</em>"
+  },
+  "reserve": {
+    "kicker": "Reservieren",
+    "title": "Buchen Sie <em>Ihren Tisch</em>",
+    "desc": "Planen Sie zu kommen? Füllen Sie unten Ihre Daten aus und wir werden uns schnellstmöglich bei Ihnen melden, um Ihren Tisch zu bestätigen.",
+    "name": "Ihr Name",
+    "phone": "Telefonnummer",
+    "email": "E-Mail-Adresse",
+    "guests": "Anzahl der Gäste",
+    "submit": "Anfrage Senden"
+  },
+  "marquee": {
+    "authentic": "Authentische Indische Küche",
+    "tandoori": "Tandoori Spezialitäten",
+    "naan": "Frisch Gebackenes Naan",
+    "vegan": "Vegane & Vegetarische Optionen",
+    "pickup": "10% Rabatt bei Abholung",
+    "delivery": "5% Rabatt bei Lieferung",
+    "open": "7 Tage die Woche Geöffnet"
+  },
+  "checkout": {
+    "title": "Kasse",
+    "emptyCart": "Ihr Warenkorb ist leer",
+    "goToMenu": "Zur Speisekarte",
+    "fullName": "Vollständiger Name",
+    "phoneNumber": "Telefonnummer",
+    "deliveryAddress": "Lieferadresse",
+    "paymentMethod": "Zahlungsmethode",
+    "cod": "Barzahlung bei Lieferung (COD)",
+    "razorpay": "Online Bezahlen (Razorpay / Karte)",
+    "orderSummary": "Bestellübersicht",
+    "total": "Gesamt",
+    "placeOrder": "Bestellung Aufgeben",
+    "processing": "Wird Verarbeitet..."
+  }
+}
