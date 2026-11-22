@@ -3,6 +3,7 @@ import { useCart } from '../context/CartContext';
 import { useNavigate } from 'react-router-dom';
 import API from '../api/axios';
 import { useTranslation } from 'react-i18next';
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 export default function CheckoutPage() {
   const { cart, cartTotal, clearCart } = useCart();
@@ -20,98 +21,90 @@ export default function CheckoutPage() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (cart.length === 0) return alert(t('checkout.emptyCart'));
-
-    setLoading(true);
-
+  // --- PAYPAL LOGIC ---
+  const createPayPalOrder = async () => {
     try {
-        // 1. Prepare Order Data
-        const orderItems = cart.map(item => ({
+      // Tell backend to create an order for the cart total
+      const res = await API.post('/create-paypal-order', { amount: cartTotal });
+      return res.data.id; // Return the PayPal order ID
+    } catch (error) {
+      console.error("Error creating PayPal order", error);
+      alert("Could not initiate PayPal payment. Please try again.");
+      throw error;
+    }
+  };
+
+  const onPayPalApprove = async (data, actions) => {
+    try {
+      // 1. Capture the payment (Optional, but recommended for production)
+      // await actions.order.capture(); 
+      
+      // 2. Save the order to our database
+      const orderItems = cart.map(item => ({
         dish_name: item.name,
         price: item.price,
         quantity: item.quantity,
         note: item.note || ""
-        }));
+      }));
 
-        // 2. If Razorpay, Create Order ID on Backend & Open Modal
-        if (formData.paymentMethod === 'razorpay') {
-        const razorpayRes = await API.post('/create-razorpay-order', { amount: cartTotal });
-        const { order_id, key_id } = razorpayRes.data;
-
-        const options = {
-            key: key_id,
-            amount: cartTotal * 100,
-            currency: "EUR", // Changed to EUR since your site uses €
-            name: "Taj Mahal Oldenburg",
-            description: "Food Order",
-            order_id: order_id,
-            handler: async function (response) {
-            try {
-                const finalOrderData = {
-                customer_name: formData.name,
-                phone: formData.phone,
-                address: formData.address,
-                total_amount: cartTotal,
-                payment_method: "razorpay",
-                items: orderItems
-                };
-                await API.post('/orders', finalOrderData);
-                alert('Payment Successful! Order placed.');
-                clearCart();
-                navigate('/');
-            } catch (err) {
-                console.error("Order save failed", err);
-                alert("Payment succeeded but order failed to save. Please contact us.");
-            }
-            },
-            prefill: {
-            name: formData.name,
-            contact: formData.phone,
-            },
-            theme: {
-            color: "#d9ac51"
-            }
-        };
-
-        const rzp = new window.Razorpay(options);
-        rzp.open();
-        
-        rzp.on('payment.failed', function (response){
-            alert("Payment failed. Please try again.");
-            setLoading(false);
-        });
-        
-        return; 
-        }
-
-        // 3. COD Flow
-        const orderData = {
+      const finalOrderData = {
         customer_name: formData.name,
         phone: formData.phone,
         address: formData.address,
         total_amount: cartTotal,
-        payment_method: "cod",
+        payment_method: "paypal",
         items: orderItems
+      };
+
+      await API.post('/orders', finalOrderData);
+      alert('Payment Successful! Order placed.');
+      clearCart();
+      navigate('/');
+      
+    } catch (err) {
+      console.error("Order save failed", err);
+      alert("Payment succeeded but order failed to save. Please contact us.");
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (cart.length === 0) return alert(t('checkout.emptyCart'));
+
+    // Only process COD here. PayPal is handled by the PayPalButtons component.
+    if (formData.paymentMethod === 'cod') {
+      setLoading(true);
+      try {
+        const orderItems = cart.map(item => ({
+          dish_name: item.name,
+          price: item.price,
+          quantity: item.quantity,
+          note: item.note || ""
+        }));
+
+        const orderData = {
+          customer_name: formData.name,
+          phone: formData.phone,
+          address: formData.address,
+          total_amount: cartTotal,
+          payment_method: "cod",
+          items: orderItems
         };
 
         const res = await API.post('/orders', orderData);
         if (res.status === 200) {
-        alert('Order placed successfully (COD)!');
-        clearCart();
-        navigate('/');
+          alert('Order placed successfully (COD)!');
+          clearCart();
+          navigate('/');
         }
-    } catch (error) {
+      } catch (error) {
         console.error(error);
         alert('Failed to place order. Please try again.');
-    } finally {
-        if (formData.paymentMethod !== 'razorpay') {
+      } finally {
         setLoading(false);
-        }
+      }
     }
-    };
-
+  };
 
   if (cart.length === 0) {
     return (
@@ -181,10 +174,10 @@ export default function CheckoutPage() {
               </label>
               <label style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}>
                 <input 
-                  type="radio" name="paymentMethod" value="razorpay" 
-                  checked={formData.paymentMethod === 'razorpay'} onChange={handleChange} 
+                  type="radio" name="paymentMethod" value="paypal" 
+                  checked={formData.paymentMethod === 'paypal'} onChange={handleChange} 
                 />
-                <span>{t('checkout.razorpay')}</span>
+                <span>PayPal</span>
               </label>
             </div>
           </div>
@@ -204,9 +197,27 @@ export default function CheckoutPage() {
             </div>
           </div>
 
-          <button type="submit" className="btn btn-primary" disabled={loading} style={{ width: '100%', padding: '16px', fontSize: '1.1rem' }}>
-            {loading ? t('checkout.processing') : `${t('checkout.placeOrder')} (€${cartTotal.toFixed(2)})`}
-          </button>
+          {/* CONDITIONAL RENDER: COD Button vs PayPal Buttons */}
+          {formData.paymentMethod === 'cod' ? (
+            <button type="submit" className="btn btn-primary" disabled={loading} style={{ width: '100%', padding: '16px', fontSize: '1.1rem' }}>
+              {loading ? t('checkout.processing') : `${t('checkout.placeOrder')} (€${cartTotal.toFixed(2)})`}
+            </button>
+          ) : (
+            <div style={{ marginTop: '1rem' }}>
+              {/* IMPORTANT: Replace YOUR_PAYPAL_CLIENT_ID with your actual Sandbox Client ID */}
+              <PayPalScriptProvider options={{ "client-id": "YOUR_PAYPAL_CLIENT_ID", currency: "EUR" }}>
+                <PayPalButtons 
+                  style={{ layout: "vertical", shape: "rect", label: "pay" }}
+                  createOrder={createPayPalOrder}
+                  onApprove={onPayPalApprove}
+                  onError={(err) => {
+                    console.error("PayPal Checkout Error", err);
+                    alert("An error occurred with PayPal. Please try again.");
+                  }}
+                />
+              </PayPalScriptProvider>
+            </div>
+          )}
         </form>
       </div>
     </div>
