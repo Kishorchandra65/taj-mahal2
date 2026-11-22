@@ -31,6 +31,7 @@ export default function HomePage() {
   const [menu, setMenu] = useState([]);
   const [activeMenuTab, setActiveMenuTab] = useState('APPETIZERS');
   const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [specialties, setSpecialties] = useState([]);
 
   // --- RESERVATION STATE (Correctly placed inside the component) ---
   const [reservationData, setReservationData] = useState({
@@ -53,6 +54,14 @@ export default function HomePage() {
         console.log("Error fetching menu, using fallback");
         setMenu(FALLBACK_MENU);
       });
+    // NEW: Fetch Specialties
+    API.get('/specials')
+      .then(res => {
+        if (res.data.length > 0) {
+          setSpecialties(res.data);
+        }
+      })
+      .catch(() => console.log("Error fetching specials"));
   }, []);
 
   const testimonials = [
@@ -226,24 +235,36 @@ export default function HomePage() {
             </div>
             
             <div className="specialties-list">
-              {[
-                { name: 'Taj Mahal Kabab', price: '18,90', img: '/gericht-grill-800.webp', tag: 'Bestseller', desc: 'Tender chicken grilled over charcoal.' },
-                { name: 'Chicken Makhni', price: '17,90', img: '/gericht-chicken-makhni-800.webp', tag: 'Classic', desc: 'Chicken in creamy butter-tomato sauce.' },
-                { name: 'Matar-Paneer', price: '14,90', img: '/gericht-matar-paneer-800.webp', tag: 'Vegetarian', desc: 'Indian cheese & peas in spicy curry.' },
-                { name: 'Tandoori Chicken', price: '16,90', img: '/gericht-grill-800.webp', tag: 'Spicy', desc: 'Marinated in yogurt and spices.' },
-              ].map((s, i) => (
-                <div key={i} className="specialty-row">
-                  <img src={s.img} alt={s.name} className="specialty-img" />
-                  <div className="specialty-info">
-                    <h4>{s.name}</h4>
-                    <p>{s.desc}</p>
-                    <div className="specialty-meta">
-                      <span className="specialty-price">€{s.price}</span>
-                      <span className="specialty-tag">{s.tag}</span>
+              {/* Use dynamic data if available, otherwise fallback */}
+              {(specialties.length > 0 ? specialties : [
+                { id: 'f1', name: 'Taj Mahal Kabab', price: 18.90, image_url: '/gericht-grill-800.webp', is_bestseller: true, desc: 'Tender chicken grilled over charcoal.' },
+                { id: 'f2', name: 'Chicken Makhni', price: 17.90, image_url: '/gericht-chicken-makhni-800.webp', is_bestseller: false, desc: 'Chicken in creamy butter-tomato sauce.' },
+                { id: 'f3', name: 'Matar-Paneer', price: 14.90, image_url: '/gericht-matar-paneer-800.webp', is_bestseller: false, desc: 'Indian cheese & peas in spicy curry.' },
+                { id: 'f4', name: 'Tandoori Chicken', price: 16.90, image_url: '/gericht-grill-800.webp', is_bestseller: false, desc: 'Marinated in yogurt and spices.' },
+              ]).map((s, i) => {
+                // Helper to ensure image URL works locally or from backend
+                const getImg = (url) => {
+                  if (!url) return '/gericht-grill-800.webp'; // fallback image
+                  if (url.startsWith('http') || url.startsWith('/')) return url;
+                  return `http://127.0.0.1:8000${url}`;
+                };
+
+                return (
+                  <div key={s.id || i} className="specialty-row">
+                    <img src={getImg(s.image_url)} alt={s.name} className="specialty-img" />
+                    <div className="specialty-info">
+                      <h4>{s.name}</h4>
+                      <p>{s.desc || s.description}</p>
+                      <div className="specialty-meta">
+                        <span className="specialty-price">€{s.price.toFixed(2).replace('.', ',')}</span>
+                        <span className="specialty-tag">
+                          {s.is_bestseller ? 'Bestseller' : 'Specialty'}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>
