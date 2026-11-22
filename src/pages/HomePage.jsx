@@ -95,7 +95,7 @@ export default function HomePage() {
       {/* HERO */}
       <section className="hero-section" style={{ position: 'relative', paddingBottom: '120px' }}>
         <div className="hero-bg">
-          <img src="/hero.webp" alt="Taj Mahal Restaurant" onError={(e) => e.target.src = "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=2560&q=85"} />
+          <img src="/hero.jpeg" alt="Taj Mahal Restaurant" onError={(e) => e.target.src = "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=2560&q=85"} />
           <div className="hero-overlay"></div>
         </div>
         
@@ -175,7 +175,7 @@ export default function HomePage() {
               </div>
               <Link to="/order" className="btn btn-primary" style={{ marginTop: '2rem' }}>{t('offers.btn')}</Link>
             </div>
-            <div className="card-image"><img src="/gastraum-800.webp" alt="Restaurant" /></div>
+            <div className="card-image"><img src="/gastraum800.jpeg" alt="Restaurant" /></div>
           </div>
         </div>
 
